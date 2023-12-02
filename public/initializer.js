@@ -17,7 +17,7 @@ iframe.src = widgetUrl.href;
 
 iframe.style.border = "none";
 iframe.style.width = "416px";
-iframe.style.height = "374px";
+iframe.style.height = "733px";
 iframe.style.position = "absolute";
 iframe.style.right = 0;
 iframe.style.bottom = 0;

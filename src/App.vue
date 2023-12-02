@@ -38,7 +38,7 @@ watch(
       {
         open: value,
         width: 416,
-        height: 374,
+        height: 733,
       },
       "*"
     );
