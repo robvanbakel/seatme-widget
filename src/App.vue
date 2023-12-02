@@ -1,15 +1,39 @@
 <script setup lang="ts">
 import { useToggle } from "@vueuse/core";
-import { watch } from "vue";
+import { ref, watch } from "vue";
+import ViewStep1 from "@/views/ViewStep1.vue";
+import ViewStep2 from "@/views/ViewStep2.vue";
+import ViewStep3 from "@/views/ViewStep3.vue";
+import SummaryHeader from "@/components/SummaryHeader.vue";
+import { useNavigationStore } from "@/stores/navigation";
+import { useDataStore } from "@/stores/data";
+
+const dataStore = useDataStore();
 
 const [showWidget, setShowWidget] = useToggle();
+const navigationStore = useNavigationStore();
 
-const locationUrl = new URL(location.href);
-const params = Object.fromEntries(locationUrl.searchParams);
+const transitionClasses = ref<{
+  "enter-from-class": string;
+  "leave-to-class": string;
+}>();
+
+const reset = () => {
+  navigationStore.reset();
+  dataStore.reset();
+};
+
+const closeWidget = () => {
+  setShowWidget(false);
+};
 
 watch(
   () => showWidget.value,
   (value) => {
+    if (navigationStore.currentStep === 3) {
+      reset();
+    }
+
     window.parent.postMessage(
       {
         open: value,
@@ -20,6 +44,22 @@ watch(
     );
   }
 );
+
+const goToStep = async (step: typeof navigationStore.currentStep) => {
+  if (navigationStore.currentStep < step) {
+    transitionClasses.value = {
+      "enter-from-class": "translate-x-full",
+      "leave-to-class": "-translate-x-full",
+    };
+  } else {
+    transitionClasses.value = {
+      "enter-from-class": "-translate-x-full",
+      "leave-to-class": "translate-x-full",
+    };
+  }
+
+  navigationStore.currentStep = step;
+};
 </script>
 
 <template>
@@ -31,23 +71,35 @@ watch(
     >
       <div
         v-if="showWidget"
-        class="mb-4 w-96 overflow-hidden rounded-2xl shadow-xl shadow-slate-950/10"
+        class="mb-4 flex h-[621px] w-96 flex-col overflow-hidden overflow-y-scroll rounded-2xl text-slate-800 shadow-xl shadow-slate-950/10"
       >
-        <div
-          class="bg-slate-800 p-6 text-center text-sm leading-relaxed text-slate-200"
+        <Transition
+          enter-from-class="translate-y-full ease-out"
+          leave-to-class="-translate-y-full ease-in"
+          class="transition-transform"
         >
-          <p>Book your table at {{ params.restaurantId }}</p>
-          <p>
-            for <span class="font-semibold text-white">4 people</span> on
-            <span class="font-semibold text-white">Nov 23, 2023</span> at
-            <span class="font-semibold text-white">19:30</span>.
-          </p>
-        </div>
-        <div class="bg-slate-50 p-6">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum id
-          quisquam nihil. Quis ducimus quo eaque laudantium natus ut quod
-          tenetur perspiciatis, dolorem, iure ipsam id totam autem facere
-          beatae.
+          <SummaryHeader v-if="!navigationStore.onSuccessScreen" />
+        </Transition>
+        <div class="grow bg-slate-50 p-6">
+          <Transition
+            mode="out-in"
+            v-bind="transitionClasses"
+            class="transition-transform"
+          >
+            <ViewStep1
+              v-if="navigationStore.currentStep === 1"
+              @next="goToStep(2)"
+            />
+            <ViewStep2
+              v-else-if="navigationStore.currentStep === 2"
+              @back="goToStep(1)"
+              @confirm="goToStep(3)"
+            />
+            <ViewStep3
+              v-else-if="navigationStore.currentStep === 3"
+              @close="closeWidget"
+            />
+          </Transition>
         </div>
       </div>
     </Transition>
