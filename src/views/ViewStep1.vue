@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import {
   ArrowRightCircleIcon,
   QuestionMarkCircleIcon,
@@ -7,11 +8,20 @@ import MainButton from "@/components/MainButton.vue";
 import { ClockIcon, UserIcon, PencilSquareIcon } from "@heroicons/vue/20/solid";
 import MainTextField from "@/components/MainTextField.vue";
 import PartySizePicker from "@/components/PartySizePicker.vue";
+import { useDataStore } from "@/stores/data";
+
+const dataStore = useDataStore();
 
 const emit = defineEmits<{
   help: [];
   next: [];
 }>();
+
+const isValid = computed(() => {
+  return (
+    !!dataStore.reservation.arrivalTime && !!dataStore.reservation.partySize
+  );
+});
 </script>
 
 <template>
@@ -42,6 +52,7 @@ const emit = defineEmits<{
         class="grow"
         label="Contact details"
         :icon="ArrowRightCircleIcon"
+        :disabled="!isValid"
       />
     </div>
   </div>

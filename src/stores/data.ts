@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
 type Restaurant = {
@@ -24,9 +24,18 @@ export const useDataStore = defineStore("data", () => {
 
   const reservation = ref<Partial<Reservation>>({});
 
+  const isValid = computed(() => {
+    return [
+      reservation.value.arrivalTime,
+      reservation.value.partySize,
+      reservation.value.name,
+      reservation.value.phone || reservation.value.email,
+    ].every(Boolean);
+  });
+
   const reset = () => {
     reservation.value = {};
   };
 
-  return { restaurant, reservation, reset };
+  return { restaurant, reservation, reset, isValid };
 });

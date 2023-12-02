@@ -11,7 +11,7 @@ const props = defineProps<{
 const priorityClasses = computed(() => {
   return props.secondary
     ? "bg-slate-200 text-slate-800 hover:bg-slate-300 active:bg-slate-400"
-    : "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800";
+    : "bg-indigo-600 text-white hover:bg-indigo-700 active:bg-indigo-800 disabled:pointer-events-none disabled:bg-indigo-200";
 });
 
 const sizeClasses = computed(() => {
@@ -21,7 +21,7 @@ const sizeClasses = computed(() => {
 
 <template>
   <button
-    class="flex items-center justify-center whitespace-nowrap rounded-md tracking-wide"
+    class="flex items-center justify-center whitespace-nowrap rounded-md tracking-wide transition-colors"
     :class="[priorityClasses, sizeClasses]"
   >
     <component
