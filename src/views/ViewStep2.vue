@@ -27,7 +27,7 @@ const emit = defineEmits<{
       <MainTextField label="Phone" :icon="PhoneIcon" field="phone" />
       <PreferredContactMethodPicker
         v-if="dataStore.reservation.email && dataStore.reservation.phone"
-        label="Preffered contact method"
+        label="Preferred contact method"
         :icon="ChatBubbleLeftEllipsisIcon"
       />
     </div>

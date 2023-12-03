@@ -34,9 +34,9 @@ const contactMethods = [
         :key="value"
       >
         <input
-          v-model="dataStore.reservation.prefferedContactMethod"
+          v-model="dataStore.reservation.preferredContactMethod"
           type="radio"
-          name="preffered-contact-method"
+          name="preferred-contact-method"
           :id="`prefer-${value}`"
           :value="value"
         />

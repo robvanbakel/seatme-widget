@@ -12,7 +12,7 @@ type Reservation = {
   name: string;
   phone: string;
   email: string;
-  prefferedContactMethod: "email" | "phone";
+  preferredContactMethod: "email" | "phone";
 };
 
 export type ReservationField = keyof Reservation;
