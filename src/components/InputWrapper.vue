@@ -2,8 +2,6 @@
 import { useDataStore } from "@/stores/data";
 import { type Component } from "vue";
 
-defineOptions({ inheritAttrs: false });
-
 const dataStore = useDataStore();
 
 defineProps<{

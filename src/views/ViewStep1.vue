@@ -26,22 +26,25 @@ const isValid = computed(() => {
 
 <template>
   <div class="flex h-full flex-col justify-between">
-    <div class="flex flex-col space-y-5">
+    <div class="flex grow flex-col gap-6">
       <MainTextField
         type="datetime-local"
         label="Arrival time"
         :icon="ClockIcon"
         field="arrivalTime"
       />
+
       <PartySizePicker label="Party size" :icon="UserIcon" />
+
       <MainTextField
         label="Notes"
+        fill-height
         textarea
         :icon="PencilSquareIcon"
         field="notes"
       />
     </div>
-    <div class="mt-6 flex space-x-3">
+    <div class="mt-6 flex gap-3">
       <MainButton
         @click="emit('help')"
         secondary
