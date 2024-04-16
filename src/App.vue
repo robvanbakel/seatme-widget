@@ -67,11 +67,10 @@ const goToStep = async (step: typeof navigationStore.currentStep) => {
     <Transition
       enter-from-class="translate-y-full opacity-0 ease-out"
       leave-to-class="translate-y-full opacity-0 ease-in"
-      class="transition-all"
     >
       <div
         v-if="showWidget"
-        class="mb-4 flex h-[621px] w-96 flex-col overflow-hidden overflow-y-scroll rounded-2xl text-slate-800 shadow-xl shadow-slate-950/10"
+        class="mb-4 flex h-[621px] w-96 flex-col overflow-hidden overflow-y-scroll rounded-2xl text-slate-800 shadow-xl shadow-slate-950/10 transition-all"
       >
         <Transition
           enter-from-class="translate-y-full ease-out"
@@ -84,7 +83,7 @@ const goToStep = async (step: typeof navigationStore.currentStep) => {
           <Transition
             mode="out-in"
             v-bind="transitionClasses"
-            class="transition-transform"
+            class="-mx-6 px-6 transition-transform"
           >
             <ViewStep1
               v-if="navigationStore.currentStep === 1"
@@ -105,7 +104,7 @@ const goToStep = async (step: typeof navigationStore.currentStep) => {
     </Transition>
     <button
       @click="setShowWidget()"
-      class="h-16 w-16 rounded-full shadow-md transition-all"
+      class="size-16 rounded-full shadow-md transition-all"
       :class="
         !!showWidget
           ? 'bg-indigo-700 active:bg-indigo-800 -rotate-45'
