@@ -58,6 +58,15 @@ const goToStep = async (step: typeof navigationStore.currentStep) => {
     };
   }
 
+  if (step === 3) {
+    try {
+      await dataStore.submit();
+    } catch {
+      console.log("An error beyond your greatest imagination has occured");
+      return;
+    }
+  }
+
   navigationStore.currentStep = step;
 };
 

@@ -47,10 +47,24 @@ export const useDataStore = defineStore("data", () => {
     restaurant.value = data;
   };
 
+  const submit = () => {
+    if (!restaurant.value) throw new Error("Restaurant details not found");
+
+    return axios.post(
+      "reservation",
+      {
+        restaurantId: restaurant.value.id,
+        ...reservation.value,
+      },
+      {
+        baseURL: import.meta.env.VITE_ROOT_API,
+      }
+    );
+  };
 
   const reset = () => {
     reservation.value = {};
   };
 
-  return { restaurant, reservation, reset, isValid };
+  return { restaurant, reservation, reset, isValid, submit, init, isReady };
 });
