@@ -22,6 +22,7 @@ const formattedTime = computed(() => {
 
 <template>
   <div
+    v-if="dataStore.restaurant"
     class="flex h-24 flex-col items-center justify-center bg-slate-800 px-6 text-center text-sm leading-relaxed text-slate-200"
   >
     <p>Book your table at {{ dataStore.restaurant.name }}</p>
