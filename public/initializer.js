@@ -1,4 +1,5 @@
-const widgetUrl = new URL("http://localhost:5173");
+const widgetOrigin = new URL(document.currentScript.getAttribute("src"));
+const widgetUrl = new URL(widgetOrigin.origin);
 
 const restaurantId = document.currentScript.getAttribute("restaurant-id");
 widgetUrl.searchParams.append("restaurantId", restaurantId);
