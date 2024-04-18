@@ -31,7 +31,9 @@ const resetIframesize = () => {
 
 resetIframesize();
 
-document.body.appendChild(wrapper);
+setTimeout(() => {
+  document.body.appendChild(wrapper);
+}, 500);
 
 window.addEventListener("message", (event) => {
   if (event.origin !== widgetUrl.origin) return;
