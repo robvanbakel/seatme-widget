@@ -83,16 +83,15 @@ onMounted(async () => {
     >
       <div
         v-if="showWidget"
-        class="mb-4 flex h-[621px] w-96 flex-col overflow-hidden overflow-y-scroll rounded-2xl text-slate-800 shadow-xl shadow-slate-950/10 transition-all"
+        class="mb-4 flex h-[621px] w-96 flex-col overflow-hidden overflow-y-scroll rounded-2xl bg-slate-50 text-slate-800 shadow-xl shadow-slate-950/10 transition-all"
       >
         <Transition
-          enter-from-class="translate-y-full ease-out"
           leave-to-class="-translate-y-full ease-in"
           class="transition-transform"
         >
           <SummaryHeader v-if="!navigationStore.onSuccessScreen" />
         </Transition>
-        <div class="grow bg-slate-50 p-6">
+        <div class="grow p-6">
           <Transition
             mode="out-in"
             v-bind="transitionClasses"
@@ -115,16 +114,22 @@ onMounted(async () => {
         </div>
       </div>
     </Transition>
-    <button
-      @click="setShowWidget()"
-      class="size-16 rounded-full shadow-md transition-all"
-      :class="
-        !!showWidget
-          ? 'bg-indigo-700 active:bg-indigo-800 -rotate-45'
-          : 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 '
-      "
+    <Transition
+      enter-from-class="scale-50 opacity-0"
+      class="transition-all duration-300 ease-[cubic-bezier(0,1,0.75,1.25)]"
     >
-      <span class="text-2xl leading-none text-white">+</span>
-    </button>
+      <button
+        v-if="dataStore.isReady"
+        @click="setShowWidget()"
+        class="size-16 rounded-full shadow-md transition-all"
+        :class="
+          !!showWidget
+            ? 'bg-indigo-700 active:bg-indigo-800 -rotate-45'
+            : 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 '
+        "
+      >
+        <span class="text-2xl leading-none text-white">+</span>
+      </button>
+    </Transition>
   </div>
 </template>
