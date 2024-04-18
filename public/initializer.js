@@ -1,6 +1,6 @@
 const widgetUrl = new URL("http://localhost:5173");
 
-const restaurantId = document.currentScript.getAttribute("restauraunt-id");
+const restaurantId = document.currentScript.getAttribute("restaurant-id");
 widgetUrl.searchParams.append("restaurantId", restaurantId);
 
 const wrapper = document.createElement("div");
