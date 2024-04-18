@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToggle } from "@vueuse/core";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import ViewStep1 from "@/views/ViewStep1.vue";
 import ViewStep2 from "@/views/ViewStep2.vue";
 import ViewStep3 from "@/views/ViewStep3.vue";
@@ -60,6 +60,10 @@ const goToStep = async (step: typeof navigationStore.currentStep) => {
 
   navigationStore.currentStep = step;
 };
+
+onMounted(async () => {
+  await dataStore.init();
+});
 </script>
 
 <template>
