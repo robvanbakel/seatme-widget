@@ -3886,6 +3886,7 @@ __metadata:
     vite: "npm:^5.0.10"
     vue: "npm:^3.3.4"
     vue-tsc: "npm:^1.6.5"
+    zod: "npm:^3.23.0"
   languageName: unknown
   linkType: soft
 
@@ -4737,5 +4738,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.0":
+  version: 3.23.0
+  resolution: "zod@npm:3.23.0"
+  checksum: 10c0/9678cc8bb4943b05145015430d730cae31564489816854cac23718344ffc26855b33e6744c948dd7906acb337108d9881298de4851ceaa290425222827492568
   languageName: node
   linkType: hard
