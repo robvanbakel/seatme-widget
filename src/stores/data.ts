@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
+import { z } from "zod";
 
 type Restaurant = {
   id: string;
@@ -19,21 +20,42 @@ type Reservation = {
 
 export type ReservationField = keyof Reservation;
 
+const Step1Schema = z.object({
+  arrivalTime: z
+    .string()
+    .regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/, "Invalid date"),
+  partySize: z.number().max(99),
+  notes: z.string().optional(),
+});
+
+const Step2Schema = z.object({
+  name: z.string().min(1),
+  email: z.string().email().optional(),
+  phone: z.string().refine(
+    (val) => {
+      return (
+        val.split("").filter((char) => !isNaN(parseInt(char))).length >= 10
+      );
+    },
+    {
+      message: "Invalid phone number",
+    }
+  ),
+  preferredContactMethod: z.enum(["email", "phone"]),
+});
+
 export const useDataStore = defineStore("data", () => {
   const restaurant = ref<Restaurant>();
   const reservation = ref<Partial<Reservation>>({});
 
-  const isReady = computed(() => {
-    return !!restaurant.value;
+  const isReady = computed(() => !!restaurant.value);
+
+  const isStep1Valid = computed(() => {
+    return Step1Schema.safeParse(reservation.value).success;
   });
 
-  const isValid = computed(() => {
-    return [
-      reservation.value.arrivalTime,
-      reservation.value.partySize,
-      reservation.value.name,
-      reservation.value.phone || reservation.value.email,
-    ].every(Boolean);
+  const isStep2Valid = computed(() => {
+    return Step2Schema.safeParse(reservation.value).success;
   });
 
   const init = async () => {
@@ -66,5 +88,14 @@ export const useDataStore = defineStore("data", () => {
     reservation.value = {};
   };
 
-  return { restaurant, reservation, reset, isValid, submit, init, isReady };
+  return {
+    restaurant,
+    reservation,
+    reset,
+    isStep1Valid,
+    isStep2Valid,
+    submit,
+    init,
+    isReady,
+  };
 });

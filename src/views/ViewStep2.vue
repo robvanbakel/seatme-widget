@@ -38,7 +38,7 @@ const emit = defineEmits<{
         class="grow"
         label="Book your table"
         :icon="CheckCircleIcon"
-        :disabled="!dataStore.isValid"
+        :disabled="!dataStore.isStep2Valid"
       />
     </div>
   </div>

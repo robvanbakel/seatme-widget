@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import {
   ArrowRightCircleIcon,
   QuestionMarkCircleIcon,
@@ -16,12 +15,6 @@ const emit = defineEmits<{
   help: [];
   next: [];
 }>();
-
-const isValid = computed(() => {
-  return (
-    !!dataStore.reservation.arrivalTime && !!dataStore.reservation.partySize
-  );
-});
 </script>
 
 <template>
@@ -55,7 +48,7 @@ const isValid = computed(() => {
         class="grow"
         label="Contact details"
         :icon="ArrowRightCircleIcon"
-        :disabled="!isValid"
+        :disabled="!dataStore.isStep1Valid"
       />
     </div>
   </div>
