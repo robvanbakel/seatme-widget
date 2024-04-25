@@ -31,16 +31,19 @@ const Step1Schema = z.object({
 const Step2Schema = z.object({
   name: z.string().min(1),
   email: z.string().email().optional(),
-  phone: z.string().refine(
-    (val) => {
-      return (
-        val.split("").filter((char) => !isNaN(parseInt(char))).length >= 10
-      );
-    },
-    {
-      message: "Invalid phone number",
-    }
-  ),
+  phone: z
+    .string()
+    .refine(
+      (val) => {
+        return (
+          val.split("").filter((char) => !isNaN(parseInt(char))).length >= 10
+        );
+      },
+      {
+        message: "Invalid phone number",
+      }
+    )
+    .optional(),
   preferredContactMethod: z.enum(["email", "phone"]),
 });
 
