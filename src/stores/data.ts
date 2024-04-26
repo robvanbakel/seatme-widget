@@ -8,18 +8,6 @@ type Restaurant = {
   name: string;
 };
 
-type Reservation = {
-  arrivalTime: string;
-  partySize: number;
-  notes: string;
-  name: string;
-  phone: string;
-  email: string;
-  preferredContactMethod: "email" | "phone";
-};
-
-export type ReservationField = keyof Reservation;
-
 const Step1Schema = z.object({
   arrivalTime: z
     .string()
@@ -46,6 +34,9 @@ const Step2Schema = z.object({
     .optional(),
   preferredContactMethod: z.enum(["email", "phone"]),
 });
+
+type Reservation = z.infer<typeof Step1Schema & typeof Step2Schema>;
+export type ReservationField = keyof Reservation;
 
 export const useDataStore = defineStore("data", () => {
   const restaurant = ref<Restaurant>();
