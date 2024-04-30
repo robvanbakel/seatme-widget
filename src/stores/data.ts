@@ -31,7 +31,6 @@ const ReservationSchema = z.object({
       z.literal(""),
     ])
     .optional(),
-  preferredContactMethod: z.enum(["email", "phone"]),
 });
 
 type Reservation = z.infer<typeof ReservationSchema>;
@@ -56,12 +55,7 @@ export const useDataStore = defineStore("data", () => {
   });
 
   const isStep2Valid = computed(() => {
-    const fields: ReservationField[] = [
-      "name",
-      "email",
-      "phone",
-      "preferredContactMethod",
-    ];
+    const fields: ReservationField[] = ["name", "email", "phone"];
 
     return fields.every((field) => !fieldErrors.value[field]?.length);
   });
