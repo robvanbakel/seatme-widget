@@ -12,25 +12,11 @@ const ReservationSchema = z.object({
   arrivalTime: z
     .string()
     .regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/, "Invalid date"),
-  partySize: z.number().max(99),
-  notes: z.string().optional(),
+  partySize: z.number().min(1).max(99),
   name: z.string().min(1),
   email: z.string().email(),
-  phone: z
-    .union([
-      z.string().refine(
-        (val) => {
-          return (
-            val.split("").filter((char) => !isNaN(parseInt(char))).length >= 10
-          );
-        },
-        {
-          message: "Invalid phone number",
-        }
-      ),
-      z.literal(""),
-    ])
-    .optional(),
+  phone: z.string().optional(),
+  notes: z.string().optional(),
 });
 
 type Reservation = z.infer<typeof ReservationSchema>;
