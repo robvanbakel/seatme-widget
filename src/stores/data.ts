@@ -15,7 +15,7 @@ const ReservationSchema = z.object({
   partySize: z.number().max(99),
   notes: z.string().optional(),
   name: z.string().min(1),
-  email: z.union([z.string().email(), z.literal("")]).optional(),
+  email: z.string().email(),
   phone: z
     .union([
       z.string().refine(
