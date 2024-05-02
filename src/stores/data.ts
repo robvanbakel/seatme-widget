@@ -1,6 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { z } from "zod";
 
 type Restaurant = {
@@ -50,9 +50,7 @@ export const useDataStore = defineStore("data", () => {
     const query = new URLSearchParams(window.location.search);
     const restaurantId = query.get("restaurantId");
 
-    const { data } = await axios.get<Restaurant>(`restaurant/${restaurantId}`, {
-      baseURL: import.meta.env.VITE_ROOT_API,
-    });
+    const { data } = await axios.get<Restaurant>(`restaurant/${restaurantId}`);
 
     restaurant.value = data;
   };
@@ -63,9 +61,7 @@ export const useDataStore = defineStore("data", () => {
       ...reservation.value,
     });
 
-    return axios.post("reservation", parsedData, {
-      baseURL: import.meta.env.VITE_ROOT_API,
-    });
+    return axios.post("reservation", parsedData);
   };
 
   const reset = () => {
