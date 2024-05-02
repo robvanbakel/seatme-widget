@@ -9,6 +9,7 @@ type Restaurant = {
 };
 
 const ReservationSchema = z.object({
+  restaurantId: z.string().uuid(),
   arrivalTime: z
     .string()
     .regex(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/, "Invalid date"),
@@ -42,7 +43,6 @@ export const useDataStore = defineStore("data", () => {
 
   const isStep2Valid = computed(() => {
     const fields: ReservationField[] = ["name", "email", "phone"];
-
     return fields.every((field) => !fieldErrors.value[field]?.length);
   });
 
@@ -58,18 +58,14 @@ export const useDataStore = defineStore("data", () => {
   };
 
   const submit = () => {
-    if (!restaurant.value) throw new Error("Restaurant details not found");
+    const parsedData = ReservationSchema.parse({
+      restaurantId: restaurant.value?.id,
+      ...reservation.value,
+    });
 
-    return axios.post(
-      "reservation",
-      {
-        restaurantId: restaurant.value.id,
-        ...reservation.value,
-      },
-      {
-        baseURL: import.meta.env.VITE_ROOT_API,
-      }
-    );
+    return axios.post("reservation", parsedData, {
+      baseURL: import.meta.env.VITE_ROOT_API,
+    });
   };
 
   const reset = () => {
