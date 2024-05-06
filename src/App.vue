@@ -10,7 +10,7 @@ import { useDataStore } from "@/stores/data";
 
 const dataStore = useDataStore();
 
-const [showWidget, setShowWidget] = useToggle();
+const [showWidget, toggleShowWidget] = useToggle();
 const navigationStore = useNavigationStore();
 
 const transitionClasses = ref<{
@@ -21,10 +21,6 @@ const transitionClasses = ref<{
 const reset = () => {
   navigationStore.reset();
   dataStore.reset();
-};
-
-const closeWidget = () => {
-  setShowWidget(false);
 };
 
 watch(
@@ -106,10 +102,7 @@ onMounted(async () => {
               @back="goToStep(1)"
               @confirm="goToStep(3)"
             />
-            <ViewStep3
-              v-else-if="navigationStore.currentStep === 3"
-              @close="closeWidget"
-            />
+            <ViewStep3 v-else-if="navigationStore.currentStep === 3" />
           </Transition>
         </div>
       </div>
@@ -120,7 +113,7 @@ onMounted(async () => {
     >
       <button
         v-if="dataStore.isReady"
-        @click="setShowWidget()"
+        @click="toggleShowWidget()"
         class="size-16 rounded-full shadow-md transition-all"
         :class="
           !!showWidget

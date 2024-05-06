@@ -2,15 +2,10 @@
 import { computed } from "vue";
 import { CheckCircleIcon } from "@heroicons/vue/24/outline";
 import { useDataStore } from "@/stores/data";
-import MainButton from "@/components/MainButton.vue";
 import { ClockIcon, UserIcon } from "@heroicons/vue/20/solid";
 import dayjs from "dayjs";
 
 const dataStore = useDataStore();
-
-const emit = defineEmits<{
-  close: [];
-}>();
 
 const formattedPartySize = computed(() => {
   const partySize = dataStore.reservation.partySize;
@@ -47,10 +42,6 @@ const formattedDate = computed(() => {
           </p>
         </div>
       </div>
-    </div>
-
-    <div class="mt-6 flex justify-center">
-      <MainButton small @click="emit('close')" label="Close" />
     </div>
   </div>
 </template>
