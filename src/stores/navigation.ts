@@ -8,9 +8,5 @@ export const useNavigationStore = defineStore("navigation", () => {
     return currentStep.value === 3;
   });
 
-  const reset = () => {
-    currentStep.value = 1;
-  };
-
-  return { currentStep, onSuccessScreen, reset };
+  return { currentStep, onSuccessScreen };
 });

@@ -64,14 +64,9 @@ export const useDataStore = defineStore("data", () => {
     return axios.post("reservation", parsedData);
   };
 
-  const reset = () => {
-    reservation.value = {};
-  };
-
   return {
     restaurant,
     reservation,
-    reset,
     fieldErrors,
     isStep1Valid,
     isStep2Valid,

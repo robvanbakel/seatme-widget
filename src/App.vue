@@ -18,18 +18,9 @@ const transitionClasses = ref<{
   "leave-to-class": string;
 }>();
 
-const reset = () => {
-  navigationStore.reset();
-  dataStore.reset();
-};
-
 watch(
   () => showWidget.value,
   (value) => {
-    if (navigationStore.currentStep === 3) {
-      reset();
-    }
-
     window.parent.postMessage(
       {
         open: value,
