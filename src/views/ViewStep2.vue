@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { ArrowUturnLeftIcon, CheckCircleIcon } from "@heroicons/vue/24/outline";
 import MainButton from "@/components/MainButton.vue";
 import { UserIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/vue/20/solid";
@@ -7,10 +8,19 @@ import { useDataStore } from "@/stores/data";
 
 const dataStore = useDataStore();
 
+const loading = ref(false);
+
 const emit = defineEmits<{
   back: [];
   confirm: [];
 }>();
+
+const onConfirm = async () => {
+  loading.value = true;
+
+  await dataStore.submit();
+  emit("confirm");
+};
 </script>
 
 <template>
@@ -23,7 +33,8 @@ const emit = defineEmits<{
     <div class="mt-6 flex space-x-3">
       <MainButton @click="emit('back')" secondary :icon="ArrowUturnLeftIcon" />
       <MainButton
-        @click="emit('confirm')"
+        @click="onConfirm"
+        :loading
         class="grow"
         label="Book your table"
         :icon="CheckCircleIcon"
