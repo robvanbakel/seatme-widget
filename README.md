@@ -1,13 +1,15 @@
 # SeatMe Widget
 
 ### Install dependencies
+
 ```
-bun install
+yarn install
 ```
 
 ### Run locally
+
 ```
-bun dev
+yarn dev
 ```
 
 ## Related repositories
