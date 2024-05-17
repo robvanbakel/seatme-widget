@@ -7,14 +7,21 @@ import dayjs from "dayjs";
 
 const dataStore = useDataStore();
 
-const formattedPartySize = computed(() => {
-  const partySize = dataStore.reservation.partySize;
-  if (partySize === 1) return "1 person";
-  return `${partySize} people`;
-});
+const reservationDetails = computed(() => {
+  const formattedPartySize = `${dataStore.reservation.partySize} ${
+    dataStore.reservation.partySize === 1 ? "person" : "people"
+  }`;
 
-const formattedDate = computed(() => {
-  return dayjs(dataStore.reservation.arrivalTime).format("D MMM HH:mm");
+  return [
+    {
+      icon: ClockIcon,
+      value: dayjs(dataStore.reservation.arrivalTime).format("D MMM HH:mm"),
+    },
+    {
+      icon: UserIcon,
+      value: formattedPartySize,
+    },
+  ];
 });
 </script>
 
@@ -31,15 +38,13 @@ const formattedDate = computed(() => {
       <h2 class="font-semibold">Reservation details</h2>
 
       <div class="mt-2 space-y-1">
-        <div class="flex justify-center gap-2">
-          <ClockIcon class="w-4" />
-          <p>{{ formattedDate }}</p>
-        </div>
-        <div class="flex justify-center gap-2">
-          <UserIcon class="w-4" />
-          <p>
-            {{ formattedPartySize }}
-          </p>
+        <div
+          class="flex justify-center gap-2"
+          v-for="(detail, index) in reservationDetails"
+          :key="index"
+        >
+          <component :is="detail.icon" class="w-4" />
+          <p>{{ detail.value }}</p>
         </div>
       </div>
     </div>
