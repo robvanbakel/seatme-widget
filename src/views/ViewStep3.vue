@@ -34,7 +34,7 @@ const reservationDetails = computed(() => {
       sent to you.
     </div>
 
-    <div class="mt-6 w-full rounded-lg bg-slate-200 p-4 text-sm shadow">
+    <div class="mt-6 w-full rounded-lg bg-slate-200 p-4 text-sm">
       <h2 class="font-semibold">Reservation details</h2>
 
       <div class="mt-2 space-y-1">
